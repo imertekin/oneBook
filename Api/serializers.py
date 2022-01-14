@@ -30,14 +30,11 @@ class BookSerializer(serializers.ModelSerializer):
 
 
         
-    # def get_takedBy2(self,obj):
-    #     qs=User.objects.filter(borrow_user__Book__id=obj.id)
-    #     try:
-    #         user=qs.get()
-    #         return user.username
-    #     except:
-    #         return "Untaked"
+class LikeSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Like
+        fields = '__all__'
 
 class BorrowBookSerializer(serializers.ModelSerializer):
     
