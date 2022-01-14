@@ -52,6 +52,9 @@ class BookViewset(viewsets.ModelViewSet):
         return Response({'message': f"{book.name} comment created."}, status=status.HTTP_200_OK)
 
 
+class LikeViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Like.objects.all()
+    serializer_class = LikeSerializer
 
 class BorrowListCreateView(viewsets.ReadOnlyModelViewSet):
     queryset = Borrow.objects.all()
