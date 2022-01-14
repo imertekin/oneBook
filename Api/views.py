@@ -77,3 +77,12 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
 
+
+class ProfileView(generics.ListAPIView, viewsets.ViewSet):
+    serializer_class = ProfileViewSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        print(self.request.user)
+        queryset = User.objects.filter(username=self.request.user)
+        return queryset
