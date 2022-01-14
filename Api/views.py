@@ -42,6 +42,13 @@ class BookViewset(viewsets.ModelViewSet):
             qs.get().delete()
             return Response({'message': f"{book.name} unliked by {user.username}"}, status=status.HTTP_200_OK)
 
+    @action(methods=['post'], detail=True)
+    def comment(self, request, pk=None):
+        book = self.get_object()
+        user = request.user
+        Comment.objects.get_or_create(
+            book=book, user=user, content=request.data['content'])
+        return Response({'message': f"{book.name} comment created."}, status=status.HTTP_200_OK)
 
 
 
