@@ -32,18 +32,15 @@ class BookViewset(viewsets.ModelViewSet):
         user = request.user
         Like.objects.get_or_create(book=book, user=user)
         return Response({'message': f"{book.name} liked by {user.username}"}, status=status.HTTP_200_OK)
-    @action(methods=['post'],detail=True)
-    def untake(self,request,pk=None):
-        book=self.get_object()
-        user=request.user
-        qs=Borrow.objects.filter(Book=book,user=user)
-        if len(qs)==0:
-            return Response({'message':"This book has not already been taken by you."},status=status.HTTP_404_NOT_FOUND)
-        
-        qs.get().delete()
-        book.is_avaible=True
-        book.save()
-        return Response({'message':"The book has been delivered."},status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=True)
+    def unlike(self, request, pk=None):
+        book = self.get_object()
+        user = request.user
+        qs = Like.objects.filter(book=book, user=user)
+        if qs.count() != 0:
+            qs.get().delete()
+            return Response({'message': f"{book.name} unliked by {user.username}"}, status=status.HTTP_200_OK)
 
 
 
