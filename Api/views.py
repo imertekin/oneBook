@@ -1,12 +1,11 @@
-from django.contrib.auth.models import  User
-from rest_framework import  viewsets,permissions,status
+from django.contrib.auth.models import User
+from rest_framework import viewsets, permissions, status, generics, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
-from .models import Book, Borrow
-from .serializers import BookSerializer, BorrowSerializer, UserSerializer
-
+from .models import Book, Like, Comment
+from .serializers import BookSerializer, LikeSerializer, CommentSerializer, ProfileViewSerializer, RegisterSerializer, UserSerializer
 
 class BookViewset(viewsets.ModelViewSet):
 
@@ -27,11 +26,12 @@ class BookViewset(viewsets.ModelViewSet):
         if book.is_avaible==False:
             return Response({'message':"This book is not on the shelf"},status=status.HTTP_404_NOT_FOUND)
         
-        book.is_avaible=False
-        book.save()
-        Borrow.objects.get_or_create(Book=book,user=user)
-        return Response({'message':f"Book taken by {user.username}"},status=status.HTTP_200_OK)
-    
+    @action(methods=['post'], detail=True)
+    def like(self, request, pk=None):
+        book = self.get_object()
+        user = request.user
+        Like.objects.get_or_create(book=book, user=user)
+        return Response({'message': f"{book.name} liked by {user.username}"}, status=status.HTTP_200_OK)
     @action(methods=['post'],detail=True)
     def untake(self,request,pk=None):
         book=self.get_object()
