@@ -67,25 +67,14 @@ class LikeSerializer(serializers.ModelSerializer):
         model = Like
         fields = '__all__'
 
-class BorrowBookSerializer(serializers.ModelSerializer):
-    
-    name=serializers.SlugRelatedField(
-        queryset=Book.objects.filter(),
-        read_only=False,
-        slug_field='name',
-        source='Book'
-     )
-    book_id=serializers.SlugRelatedField(
-        queryset=Book.objects.filter(),
-        read_only=False,
-        slug_field='id',
-        source='Book'
-     )
+
+class UserSerializer(serializers.ModelSerializer):
+    comment_owner = CommentSerializer(many=True, read_only=True)
+    liker = LikeSerializer(many=True, read_only=True)
 
     class Meta:
-        model=Borrow
-        fields=['book_id','name']
-
+        model = User
+        fields = ['id', 'username', 'email', 'liker', 'comment_owner']
 
 
 class UserSerializer(serializers.ModelSerializer):
