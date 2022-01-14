@@ -6,26 +6,27 @@ from rest_framework.response import Response
 
 from .models import Book, Like, Comment
 from .serializers import BookSerializer, LikeSerializer, CommentSerializer, ProfileViewSerializer, RegisterSerializer, UserSerializer
+from .permission import IsCommentOwnerOrReadOnly
 
 class BookViewset(viewsets.ModelViewSet):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    # permission_classes =[permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_permissions(self):
-        if self.action=='take'or self.action=='untake':
-           return [permissions.IsAuthenticated()]
+        if self.action == 'like' or self.action == 'unlike':
+            return [permissions.IsAuthenticated()]
 
         return super().get_permissions()
 
-    @action(methods=['post'],detail=True)
-    def take(self,request,pk=None):
-        book=self.get_object()
-        user=request.user
-        if book.is_avaible==False:
-            return Response({'message':"This book is not on the shelf"},status=status.HTTP_404_NOT_FOUND)
-        
+    def get_serializer_class(self):
+        if self.action == 'like' or self.action == 'unlike':
+            return LikeSerializer
+        if self.action == 'comment':
+            return CommentSerializer
+        return super().get_serializer_class()
+
     @action(methods=['post'], detail=True)
     def like(self, request, pk=None):
         book = self.get_object()
