@@ -17,9 +17,11 @@ class BorrowSerializer(serializers.ModelSerializer):
      )
 
 
+class CommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Borrow
-        fields=['id','Book','user']
+        model = Comment
+        fields = '__all__'
+
 
 class BookSerializer(serializers.ModelSerializer):
     # takedBy2=serializers.SerializerMethodField()
