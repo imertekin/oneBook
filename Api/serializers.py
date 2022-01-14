@@ -24,14 +24,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    # takedBy2=serializers.SerializerMethodField()
+    _comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
-        model=Book
-        fields=['id','ISBN','name','Author','Publisher','Publication_date','Genres','Print_length','is_avaible','takedBy']
+        model = Book
+        fields = ['id', 'ISBN', 'image', 'name', 'Author', 'Publisher',
+                  'Publication_date', 'Genres', 'Print_length', '_likes_count', '_comments']
 
 
-        
 class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
