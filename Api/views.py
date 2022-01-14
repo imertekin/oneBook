@@ -56,9 +56,15 @@ class LikeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
 
-class BorrowListCreateView(viewsets.ReadOnlyModelViewSet):
-    queryset = Borrow.objects.all()
-    serializer_class = BorrowSerializer
+
+class CommentView(mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
+                  mixins.ListModelMixin,
+                  viewsets.GenericViewSet,):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsCommentOwnerOrReadOnly]
 
 
 class UserViewset(viewsets.ModelViewSet):
