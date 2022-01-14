@@ -77,9 +77,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'liker', 'comment_owner']
 
 
-class UserSerializer(serializers.ModelSerializer):
-    borrow_books=BorrowBookSerializer(many=True,read_only=True,source='borrow_user')
+class ProfileViewSerializer(serializers.ModelSerializer):
+    comment_owner = CommentSerializer(many=True, read_only=True)
+    liker = LikeSerializer(many=True, read_only=True)
 
     class Meta:
-        model=User
-        fields=['id','username','email','borrow_books']
+        model = User
+        fields = ['id', 'username', 'email', 'first_name',
+                  'last_name', 'liker', 'comment_owner']
