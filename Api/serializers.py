@@ -47,6 +47,14 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    user=serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+     )
+    book=serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+     )
     class Meta:
         model = Comment
         fields = '__all__'
@@ -62,6 +70,14 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class LikeSerializer(serializers.ModelSerializer):
+    book=serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+     )
+    user=serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+     )
 
     class Meta:
         model = Like
