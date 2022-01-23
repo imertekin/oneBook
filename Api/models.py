@@ -30,7 +30,7 @@ class Book(models.Model):
 
 class Like(models.Model):
     book=models.ForeignKey(Book,on_delete=models.CASCADE,related_name='like')
-    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='liker')
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='likes')
     created_at=models.DateTimeField(auto_now_add=True)
 
 
@@ -40,7 +40,7 @@ class Like(models.Model):
 
 class Comment(models.Model):
     book=models.ForeignKey(Book,on_delete=models.CASCADE,related_name='books_comment')
-    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='comment_owner')
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='comments')
     content=models.TextField(max_length=140,blank=False)
     created_at=models.DateTimeField(auto_now_add=True)
 
@@ -50,7 +50,7 @@ class Comment(models.Model):
 
 class Booklist(models.Model):
     book=models.ForeignKey(Book,on_delete=models.CASCADE,related_name='booklist')
-    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='Mybooks')
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='mybooks')
     created_at=models.DateTimeField(auto_now_add=True)
 
 

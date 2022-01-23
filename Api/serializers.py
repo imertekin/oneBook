@@ -99,23 +99,23 @@ class BookListSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    comment_owner = CommentSerializer(many=True, read_only=True)
-    liker = LikeSerializer(many=True, read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
+    likes = LikeSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'liker', 'comment_owner']
+        fields = ['id', 'username', 'email', 'likes', 'comments']
 
 
 class ProfileViewSerializer(serializers.ModelSerializer):
-    comment_owner = CommentSerializer(many=True, read_only=True)
-    liker = LikeSerializer(many=True, read_only=True)
-    Mybooks=BookListSerializer(many=True,read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
+    likes = LikeSerializer(many=True, read_only=True)
+    mybooks=BookListSerializer(many=True,read_only=True)
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name',
-                  'last_name', 'liker', 'comment_owner',"Mybooks"]
+                  'last_name', 'likes', 'comments',"mybooks"]
 
 class ChangePasswordSerializer(serializers.Serializer):
 
