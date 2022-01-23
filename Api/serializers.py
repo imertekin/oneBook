@@ -62,11 +62,11 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
     _comments = CommentSerializer(many=True, read_only=True)
-
+    
     class Meta:
         model = Book
         fields = ['id', 'ISBN', 'image', 'name', 'Author', 'Publisher',
-                  'Publication_date', 'Genres', 'Print_length', '_likes_count', '_comments']
+                  'Publication_date', 'Genres', 'Print_length', '_likes_count','_comments']
 
 
 class LikeSerializer(serializers.ModelSerializer):
@@ -101,3 +101,16 @@ class ProfileViewSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'first_name',
                   'last_name', 'liker', 'comment_owner']
+
+class ChangePasswordSerializer(serializers.Serializer):
+
+    model = User
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True ,validators=[validate_password])
+
+    
+    def validate(self, attrs):
+        if attrs["old_password"] == attrs["new_password"]:
+            raise serializers.ValidationError(
+                {"Message": "Your new password must be different from the old one"})
+        return attrs
