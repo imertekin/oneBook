@@ -4,8 +4,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 
-from .models import Book, Like, Comment
-from .serializers import BookSerializer, ChangePasswordSerializer, LikeSerializer, CommentSerializer, ProfileViewSerializer, RegisterSerializer, UserSerializer
+from .models import Book, Booklist, Like, Comment
+from .serializers import BookListSerializer, BookSerializer, ChangePasswordSerializer, LikeSerializer, CommentSerializer, ProfileViewSerializer, RegisterSerializer, UserSerializer
 from .permission import IsCommentOwnerOrReadOnly
 
 class BookViewset(viewsets.ModelViewSet):
@@ -50,6 +50,21 @@ class BookViewset(viewsets.ModelViewSet):
         Comment.objects.get_or_create(
             book=book, user=user, content=request.data['content'])
         return Response({'message': f"{book.name} comment created."}, status=status.HTTP_200_OK)
+    
+    @action(methods=['post'], detail=True)
+    def addBooklist(self, request, pk=None):
+        book = self.get_object()
+        user = request.user
+        Booklist.objects.get_or_create(book=book, user=user)
+        return Response({'message': f"{book.name} Added by {user.username}"}, status=status.HTTP_200_OK)
+    
+    @action(methods=['post'], detail=True)
+    def delBooklist(self, request, pk=None):
+        book = self.get_object()
+        user = request.user
+        booklist=Booklist.objects.get(book=book, user=user)
+        booklist.delete()
+        return Response({'message': f"{book.name} deleted by {user.username}"}, status=status.HTTP_200_OK)
 
 
 class LikeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -65,6 +80,10 @@ class CommentView(mixins.RetrieveModelMixin,
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsCommentOwnerOrReadOnly]
+
+class BookListViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Booklist.objects.all()
+    serializer_class = BookListSerializer
 
 
 class UserViewset(viewsets.ModelViewSet):
