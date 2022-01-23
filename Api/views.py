@@ -58,13 +58,6 @@ class BookViewset(viewsets.ModelViewSet):
         Booklist.objects.get_or_create(book=book, user=user)
         return Response({'message': f"{book.name} Added by {user.username}"}, status=status.HTTP_200_OK)
     
-    @action(methods=['post'], detail=True)
-    def delBooklist(self, request, pk=None):
-        book = self.get_object()
-        user = request.user
-        booklist=Booklist.objects.get(book=book, user=user)
-        booklist.delete()
-        return Response({'message': f"{book.name} deleted by {user.username}"}, status=status.HTTP_200_OK)
 
 
 class LikeViewSet(viewsets.ReadOnlyModelViewSet):
@@ -81,10 +74,14 @@ class CommentView(mixins.RetrieveModelMixin,
     serializer_class = CommentSerializer
     permission_classes = [IsCommentOwnerOrReadOnly]
 
-class BookListViewSet(viewsets.ReadOnlyModelViewSet):
+class BookListViewSet(mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
+                  mixins.ListModelMixin,
+                  viewsets.GenericViewSet,):
     queryset = Booklist.objects.all()
     serializer_class = BookListSerializer
-
+    permission_classes = [IsCommentOwnerOrReadOnly]
 
 class UserViewset(viewsets.ModelViewSet):
 
