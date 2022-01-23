@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-from .models import Book, Comment, Like
+from .models import Book, Booklist, Comment, Like
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -83,6 +83,20 @@ class LikeSerializer(serializers.ModelSerializer):
         model = Like
         fields = '__all__'
 
+class BookListSerializer(serializers.ModelSerializer):
+    book=serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+     )
+    user=serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+     )
+
+    class Meta:
+        model = Booklist
+        fields = '__all__'
+
 
 class UserSerializer(serializers.ModelSerializer):
     comment_owner = CommentSerializer(many=True, read_only=True)
@@ -96,11 +110,12 @@ class UserSerializer(serializers.ModelSerializer):
 class ProfileViewSerializer(serializers.ModelSerializer):
     comment_owner = CommentSerializer(many=True, read_only=True)
     liker = LikeSerializer(many=True, read_only=True)
+    Mybooks=BookListSerializer(many=True,read_only=True)
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'first_name',
-                  'last_name', 'liker', 'comment_owner']
+                  'last_name', 'liker', 'comment_owner',"Mybooks"]
 
 class ChangePasswordSerializer(serializers.Serializer):
 
