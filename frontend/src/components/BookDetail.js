@@ -36,8 +36,8 @@ export default function BookDetail({ user }) {
 
   useEffect(() => {
     const like = () => {
-      user.liker &&
-      user.liker.filter((i) => i.book === thisBook.name).length > 0
+      user.likes &&
+      user.likes.filter((i) => i.book === thisBook.name).length > 0
         ? setLiked(true)
         : setLiked(false);
     };
