@@ -67,7 +67,7 @@ function App() {
           <Route path="/my-profile" element={<Profile user={user} setUser={setUser} />}/>
           <Route path="*" element={<Navigate to="/404" />} />
           <Route path="/404" element={<NotFound />} />
-          <Route path="/books/:id" element={<BookDetail />} />
+          <Route path="/books/:id" element={<BookDetail user={user} />} />
         </Routes>
       </Router>
     </div>

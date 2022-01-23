@@ -2,42 +2,24 @@ a {
   text-decoration: none;
 }
 
+html{
+  background-color: #f3d5b5;
+}
+
 .App {
   min-height: 100vh;
-  background-color: #52154e;
 }
 
-.container-detail {
-  gap: 100px;
-  margin: 20px;
-  padding: 10px;
+.detail-container textarea{
+  resize: none;
+}
+
+.detail-upper{
   display: flex;
-  justify-content: center;
-  font-size: 25px;
-  font-family: "Roboto", sans-serif;
-  color: #3e3e3e;
-  text-transform: capitalize;
-}
-
-.container-detail-right {
-  border-radius: 10px;
-  background: #dae0f2;
-  padding-left: 100px;
-  padding-right: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 500px;
-}
-
-.container-detail-right span {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-top: 25px;
-}
-
-.container-detail-left img {
-  border-radius: 10px;
+  justify-content: space-evenly;
+  width: 50%;
+  margin: auto;
+  margin-top: 10px;
 }
 
 .container-list {
@@ -54,26 +36,26 @@ a {
   transition: transform 200ms ease-in;
 }
 
-.container-list img:hover {
+/* .container-list img:hover {
   transform: scale(1.05);
-}
+} */
 
 .navbar {
-  background-color: #efe9e7;
+  background-color: #a47148;
   height: 45px;
   padding: 5px;
   font-size: 23px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #3e3e3e;
+  color: #e9c46a;
 }
 .navbar span {
   text-transform:capitalize;
 }
 
 .navbar a {
-  color: #3e3e3e;
+  color: #e9c46a;
 }
 
 .nav-item-right {
@@ -107,9 +89,8 @@ a {
 
 .flip-card {
   background-color: transparent;
-  width: 365px;
-  height: 500px;
-  border: 1px solid #52154e;
+  width: 265px;
+  height: 400px;
   perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
@@ -152,9 +133,10 @@ a {
 .flip-card-back {
   padding-left: 15px;
   border-radius: 10px;
-  background-color: #e2fadb;
-  color: #52154e;
+  background-color: #bc8a5f;
+  color: #583101;
   transform: rotateY(180deg);
+  font-size: 18px;
 }
 
 
@@ -162,7 +144,7 @@ a {
 
 .login-container {
   width: 25%;
-  background: #e9c46a;
+  background: #a47148;
   height: 70vh;
   margin: 70px auto;
   display: flex;
@@ -223,3 +205,90 @@ a {
 
 }
 
+.comments-container{
+  border: 3px solid #a47148;
+  border-radius: 10px;
+  width: 30%;
+  margin: auto;
+  padding: 5px;
+}
+
+.comments{
+display: flex;
+flex-direction: column;
+margin-bottom: 5px;
+font-size: 18px;
+}
+
+.comment-time{
+  margin-left: 5px;
+  color: #583101;
+}
+.comment-item{
+  color: #583101;
+
+}
+
+.comment-info{
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3px;
+  
+}
+
+.comment-area{
+  width: 30%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-area textarea{
+  background-color: #f3d5b5;
+  box-shadow: 5px 5px #a47148;
+  border: 3px solid #a47148;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 8px;
+  color: #a47148;
+  font-size: 20px;
+
+}
+
+.comment-area textarea:focus{
+  outline: none !important;
+  border-color: #a47148;
+  
+  }
+
+.comment-area button {
+  align-self: flex-end;
+  width: 15%;
+  margin: 12px 12px 8px 0px;
+  padding: 10px;
+  background-color: #583101; 
+  border: none;
+  border-radius: 4px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  
+}
+
+.btn-container{
+  display: flex;
+}
+
+.like-btn {
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover{
+transform: scale(1.1);
+cursor: pointer;
+}
