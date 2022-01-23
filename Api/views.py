@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 
 from .models import Book, Like, Comment
-from .serializers import BookSerializer, LikeSerializer, CommentSerializer, ProfileViewSerializer, RegisterSerializer, UserSerializer
+from .serializers import BookSerializer, ChangePasswordSerializer, LikeSerializer, CommentSerializer, ProfileViewSerializer, RegisterSerializer, UserSerializer
 from .permission import IsCommentOwnerOrReadOnly
 
 class BookViewset(viewsets.ModelViewSet):
@@ -83,6 +83,23 @@ class ProfileView(generics.ListAPIView, viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        print(self.request.user)
         queryset = User.objects.filter(username=self.request.user)
         return queryset
+    
+    def get_serializer_class(self):
+        if self.action=="change_password":
+            return ChangePasswordSerializer
+        return super().get_serializer_class()
+
+    @action(methods=['post'], detail=False)
+    def change_password(self, request, pk=None):
+        user=User.objects.get(username=request.user)
+        serializer=ChangePasswordSerializer(data=request.data)
+        # print(user.check_password('test'))
+        if serializer.is_valid():
+            if not user.check_password(serializer.data.get("old_password")):
+                 return Response({"message": "Wrong password."}, status=status.HTTP_400_BAD_REQUEST)
+            user.set_password(serializer.data.get("new_password"))
+            user.save()
+            return Response({"Message":"Password changed successfully"},status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
