@@ -10,7 +10,7 @@ export default function Navbar({isLoggin,user}) {
     return (
         <div className='navbar'>
           <div className='nav-item-left' >
-            <a href="/">My books</a>
+            <a href="/">One-Book</a>
           </div>
           <div className='search-bar'>
             <input type="text" placeholder='Search' />
@@ -19,7 +19,7 @@ export default function Navbar({isLoggin,user}) {
            {isLoggin ? ( 
            <>
            <span>{user.username}</span> 
-           <a href="/my-profile">Hesabım</a> 
+           <a href="/my-profile">Profile</a> 
            <a onClick={handlerLogout} href="/">Logout</a>
            </>):(<>
             <a href="/login">Login</a>
