@@ -46,3 +46,13 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return f" {self.user.username} 's comment  "
+
+
+class Booklist(models.Model):
+    book=models.ForeignKey(Book,on_delete=models.CASCADE,related_name='booklist')
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='Mybooks')
+    created_at=models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self) -> str:
+        return f'{self.book.name} added booklist by {self.user.username}'
