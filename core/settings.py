@@ -149,7 +149,7 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
